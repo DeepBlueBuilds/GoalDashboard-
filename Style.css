@@ -1,0 +1,138 @@
+/* Goal Dashboard - Apple Inspired Style */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+    background: #000;
+    color: white;
+}
+
+
+.dashboard {
+    padding: 30px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+/* Header */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#date {
+    font-size: 28px;
+    opacity: .85;
+}
+
+#time {
+    font-size: 48px;
+    font-weight: 600;
+}
+
+
+/* Cards */
+
+.card {
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(20px);
+    border-radius: 28px;
+    padding: 25px;
+    box-shadow: 0 10px 40px rgba(0,0,0,.3);
+}
+
+
+.card h2 {
+    margin-top: 0;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+
+.weather {
+    text-align: center;
+}
+
+
+#weather {
+    font-size: 36px;
+}
+
+
+/* Two-column section */
+
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+
+.number {
+    font-size: 42px;
+    font-weight: 700;
+}
+
+
+.card p {
+    font-size: 20px;
+    opacity: .8;
+}
+
+
+/* Progress Bars */
+
+.progress {
+    height: 14px;
+    background: rgba(255,255,255,.2);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+
+.progress-fill {
+    height: 100%;
+    border-radius: 20px;
+}
+
+
+.weight {
+    width: 62%;
+    background: white;
+}
+
+
+.debt {
+    width: 35%;
+    background: white;
+}
+
+
+/* Goals */
+
+.goal {
+    font-size: 24px;
+    margin: 15px 0;
+}
+
+
+/* iPad Landscape Optimization */
+
+@media (orientation: landscape) {
+
+    .dashboard {
+        max-width: 1200px;
+        margin: auto;
+    }
+
+}
