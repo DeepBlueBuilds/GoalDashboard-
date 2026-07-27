@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goal Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- Header -->
+    <div class="header">
+        <div id="date"></div>
+        <div id="time"></div>
+    </div>
+
+
+    <!-- Weather -->
+    <div class="card weather">
+        <h2>☀️ Weather</h2>
+        <p id="weather">72° Mostly Sunny</p>
+    </div>
+
+
+    <!-- Goals Row -->
+    <div class="row">
+
+        <div class="card">
+            <h2>⚖️ Weight</h2>
+            <div class="number">
+                190.0 lbs
+            </div>
+            <p>Goal: 180 lbs</p>
+            <div class="progress">
+                <div class="progress-fill weight"></div>
+            </div>
+        </div>
+
+
+        <div class="card">
+            <h2>💳 Debt Freedom</h2>
+            <div class="number">
+                $22,470
+            </div>
+            <p>Remaining</p>
+            <div class="progress">
+                <div class="progress-fill debt"></div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Daily Goals -->
+    <div class="card">
+        <h2>🎯 Today's Goals</h2>
+
+        <div class="goal">
+            ✅ Workout
+        </div>
+
+        <div class="goal">
+            ⬜ Read 20 minutes
+        </div>
+
+        <div class="goal">
+            ✅ Drink Water
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<script src="app.js"></script>
+
+</body>
+</html>
