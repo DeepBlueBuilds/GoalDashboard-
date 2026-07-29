@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Goal Dashboard</title>
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -11,70 +15,82 @@
 
 <div class="dashboard">
 
-    <!-- Header -->
-    <div class="header">
-        <div id="date"></div>
-        <div id="time"></div>
-    </div>
+    <header class="top">
 
+        <div>
 
-    <!-- Weather -->
-    <div class="card weather">
-        <h2>☀️ Weather</h2>
-        <p id="weather">72° Mostly Sunny</p>
-    </div>
+            <div id="greeting">Good Morning</div>
 
+            <div id="date"></div>
 
-    <!-- Goals Row -->
-    <div class="row">
-
-        <div class="card">
-            <h2>⚖️ Weight</h2>
-            <div class="number">
-                190.0 lbs
-            </div>
-            <p>Goal: 180 lbs</p>
-            <div class="progress">
-                <div class="progress-fill weight"></div>
-            </div>
         </div>
 
+        <div id="time"></div>
+
+    </header>
+
+    <section class="weather card">
+
+        <h2>🌤 Weather</h2>
+
+        <div id="weather">
+            Loading...
+        </div>
+
+    </section>
+
+    <section class="grid">
 
         <div class="card">
+
+            <h2>⚖️ Weight</h2>
+
+            <div class="big-number">
+                190.0
+            </div>
+
+            <p>Goal: 180 lbs</p>
+
+        </div>
+
+        <div class="card">
+
             <h2>💳 Debt Freedom</h2>
-            <div class="number">
+
+            <div class="big-number">
                 $22,470
             </div>
+
             <p>Remaining</p>
-            <div class="progress">
-                <div class="progress-fill debt"></div>
-            </div>
+
         </div>
 
-    </div>
+        <div class="card">
 
+            <h2>🎯 Today's Goals</h2>
 
-    <!-- Daily Goals -->
-    <div class="card">
-        <h2>🎯 Today's Goals</h2>
+            <ul>
+                <li>✅ Workout</li>
+                <li>⬜ Read 20 min</li>
+                <li>✅ Drink Water</li>
+            </ul>
 
-        <div class="goal">
-            ✅ Workout
         </div>
 
-        <div class="goal">
-            ⬜ Read 20 minutes
+        <div class="card">
+
+            <h2>🚀 Motivation</h2>
+
+            <p>
+                Small progress every day
+                leads to big results.
+            </p>
+
         </div>
 
-        <div class="goal">
-            ✅ Drink Water
-        </div>
-
-    </div>
-
+    </section>
 
 </div>
-
 
 <script src="app.js"></script>
 
