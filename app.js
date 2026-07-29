@@ -1,33 +1,38 @@
-// Goal Dashboard - Core Functions
-
-
-function updateDateTime() {
+function updateClock(){
 
     const now = new Date();
 
-    const dateOptions = {
-        weekday: "long",
-        month: "long",
-        day: "numeric"
-    };
-
-
-    document.getElementById("date").innerHTML =
-        now.toLocaleDateString(undefined, dateOptions);
-
-
-    document.getElementById("time").innerHTML =
-        now.toLocaleTimeString([], {
-            hour: "numeric",
-            minute: "2-digit"
+    document.getElementById("time").textContent =
+        now.toLocaleTimeString([],{
+            hour:"numeric",
+            minute:"2-digit"
         });
+
+    document.getElementById("date").textContent =
+        now.toLocaleDateString([],{
+            weekday:"long",
+            month:"long",
+            day:"numeric"
+        });
+
+    const hour = now.getHours();
+
+    let greeting="Good Evening";
+
+    if(hour<12)
+        greeting="Good Morning";
+
+    else if(hour<18)
+        greeting="Good Afternoon";
+
+    document.getElementById("greeting").textContent =
+        greeting;
 
 }
 
+updateClock();
 
-// Update immediately
-updateDateTime();
+setInterval(updateClock,1000);
 
-
-// Update every second
-setInterval(updateDateTime, 1000);
+document.getElementById("weather").textContent =
+"72° • Mostly Sunny";
