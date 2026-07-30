@@ -1,107 +1,79 @@
-// ===============================
-// Goal Dashboard v1.2
-// Clock + Greeting + Open-Meteo Weather
-// ===============================
-
-// Carmel, Indiana
 const LAT = 39.9784;
 const LON = -86.1180;
 
-function updateClock() {
+function updateClock(){
 
-    const now = new Date();
+const now=new Date();
 
-    document.getElementById("time").textContent =
-        now.toLocaleTimeString([], {
-            hour: "numeric",
-            minute: "2-digit"
-        });
+time.textContent=now.toLocaleTimeString([],{
+hour:"numeric",
+minute:"2-digit"
+});
 
-    document.getElementById("date").textContent =
-        now.toLocaleDateString([], {
-            weekday: "long",
-            month: "long",
-            day: "numeric"
-        });
+date.textContent=now.toLocaleDateString([],{
+weekday:"long",
+month:"long",
+day:"numeric"
+});
 
-    const hour = now.getHours();
+const h=now.getHours();
 
-    let greeting = "Good Evening";
+greeting.textContent=
+h<12?"Good Morning":
+h<18?"Good Afternoon":
+"Good Evening";
 
-    if (hour < 12)
-        greeting = "Good Morning";
-    else if (hour < 18)
-        greeting = "Good Afternoon";
-
-    document.getElementById("greeting").textContent = greeting;
 }
 
-function weatherDescription(code) {
+function weatherText(code){
 
-    const map = {
-        0: "Clear",
-        1: "Mostly Clear",
-        2: "Partly Cloudy",
-        3: "Cloudy",
-        45: "Fog",
-        48: "Fog",
-        51: "Light Drizzle",
-        53: "Drizzle",
-        55: "Heavy Drizzle",
-        61: "Light Rain",
-        63: "Rain",
-        65: "Heavy Rain",
-        71: "Snow",
-        80: "Rain Showers",
-        95: "Thunderstorms"
-    };
+const map={
+0:"Clear",
+1:"Mostly Clear",
+2:"Partly Cloudy",
+3:"Cloudy",
+45:"Fog",
+51:"Drizzle",
+61:"Rain",
+63:"Rain",
+71:"Snow",
+80:"Showers",
+95:"Storms"
+};
 
-    return map[code] || "Weather";
+return map[code]||"Weather";
+
 }
 
-async function loadWeather() {
+async function loadWeather(){
 
-    try {
+const url=`https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&timezone=auto`;
 
-        const url =
-            `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&timezone=auto`;
+const r=await fetch(url);
 
-        const response = await fetch(url);
+const d=await r.json();
 
-        const data = await response.json();
+currentTemp.textContent=Math.round(d.current.temperature_2m)+"°";
 
-        const current = Math.round(data.current.temperature_2m);
+currentCondition.textContent=weatherText(d.current.weather_code);
 
-        const high = Math.round(data.daily.temperature_2m_max[0]);
+const names=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 
-        const low = Math.round(data.daily.temperature_2m_min[0]);
+forecast.innerHTML="";
 
-        const text = weatherDescription(data.current.weather_code);
+for(let i=0;i<7;i++){
 
-        document.getElementById("weather").innerHTML =
-            `
-            <div style="font-size:48px;font-weight:700;">
-                ${current}°
-            </div>
+const day=new Date(d.daily.time[i]);
 
-            <div style="font-size:22px;">
-                ${text}
-            </div>
+forecast.innerHTML+=`
+<div class="day">
+<div>${names[day.getDay()]}</div>
+<div>${Math.round(d.daily.temperature_2m_max[i])}°</div>
+<div>${weatherText(d.daily.weather_code[i])}</div>
+</div>
+`;
 
-            <div style="margin-top:10px;opacity:.75;">
-                High ${high}° • Low ${low}°
-            </div>
-            `;
-
-    }
-    catch (e) {
-
-        document.getElementById("weather").textContent =
-            "Weather unavailable";
-
-        console.log(e);
-
-    }
+}
 
 }
 
