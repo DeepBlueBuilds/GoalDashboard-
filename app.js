@@ -1,84 +1,97 @@
 const LAT = 39.9784;
 const LON = -86.1180;
 
-function updateClock(){
+function updateClock() {
 
-const now=new Date();
+    const now = new Date();
 
-time.textContent=now.toLocaleTimeString([],{
-hour:"numeric",
-minute:"2-digit"
-});
+    greeting.textContent =
+        now.getHours() < 12 ? "Good Morning" :
+        now.getHours() < 18 ? "Good Afternoon" :
+        "Good Evening";
 
-date.textContent=now.toLocaleDateString([],{
-weekday:"long",
-month:"long",
-day:"numeric"
-});
+    date.textContent = now.toLocaleDateString([], {
+        weekday: "long",
+        month: "long",
+        day: "numeric"
+    });
 
-const h=now.getHours();
-
-greeting.textContent=
-h<12?"Good Morning":
-h<18?"Good Afternoon":
-"Good Evening";
+    time.textContent = now.toLocaleTimeString([], {
+        hour: "numeric",
+        minute: "2-digit"
+    });
 
 }
 
-function weatherText(code){
+function weatherIcon(code) {
 
-const map={
-0:"Clear",
-1:"Mostly Clear",
-2:"Partly Cloudy",
-3:"Cloudy",
-45:"Fog",
-51:"Drizzle",
-61:"Rain",
-63:"Rain",
-71:"Snow",
-80:"Showers",
-95:"Storms"
-};
+    if (code === 0) return "☀️";
+    if (code === 1) return "🌤️";
+    if (code === 2) return "⛅";
+    if (code === 3) return "☁️";
 
-return map[code]||"Weather";
+    if (code >= 45 && code <= 48) return "🌫️";
 
+    if (code >= 51 && code <= 57) return "🌦️";
+
+    if (code >= 61 && code <= 67) return "🌧️";
+
+    if (code >= 71 && code <= 77) return "❄️";
+
+    if (code >= 80 && code <= 82) return "🌧️";
+
+    if (code >= 95) return "⛈️";
+
+    return "❔";
 }
 
-async function loadWeather(){
+async function loadWeather() {
 
-const url=`https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&timezone=auto`;
+    try {
 
-const r=await fetch(url);
+        const url =
+            `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&timezone=auto`;
 
-const d=await r.json();
+        const response = await fetch(url);
 
-currentTemp.textContent=Math.round(d.current.temperature_2m)+"°";
+        const data = await response.json();
 
-currentCondition.textContent=weatherText(d.current.weather_code);
+        currentTemp.textContent =
+            Math.round(data.current.temperature_2m) + "°";
 
-const names=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+        currentCondition.innerHTML =
+            `<div style="font-size:70px">${weatherIcon(data.current.weather_code)}</div>`;
 
-forecast.innerHTML="";
+        const weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 
-for(let i=0;i<7;i++){
+        forecast.innerHTML = "";
 
-const day=new Date(d.daily.time[i]);
+        for (let i = 0; i < 7; i++) {
 
-forecast.innerHTML+=`
-<div class="day">
-<div>${names[day.getDay()]}</div>
-<div>${Math.round(d.daily.temperature_2m_max[i])}°</div>
-<div>${weatherText(d.daily.weather_code[i])}</div>
-</div>
-`;
+            const day = new Date(data.daily.time[i]);
 
-}
+            forecast.innerHTML += `
+                <div class="day">
+                    <div>${weekday[day.getDay()]}</div>
+                    <div style="font-size:32px">
+                        ${weatherIcon(data.daily.weather_code[i])}
+                    </div>
+                    <div>${Math.round(data.daily.temperature_2m_max[i])}°</div>
+                </div>
+            `;
+        }
+
+    } catch (err) {
+
+        currentCondition.textContent = "Weather unavailable";
+        console.log(err);
+
+    }
 
 }
 
 updateClock();
 loadWeather();
 
-setInterval(updateClock,1000);
-setInterval(loadWeather,600000);
+setInterval(updateClock, 1000);
+setInterval(loadWeather, 600000);
