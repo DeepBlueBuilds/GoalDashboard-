@@ -5,90 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Goal Dashboard</title>
 
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<div class="dashboard">
+<div class="container">
 
-    <header class="top">
-
+    <header>
         <div>
-
-            <div id="greeting">Good Morning</div>
-
-            <div id="date"></div>
-
+            <h1 id="greeting">Good Morning</h1>
+            <p id="date"></p>
         </div>
 
         <div id="time"></div>
-
     </header>
 
-    <section class="weather card">
-
-        <h2>🌤 Weather</h2>
-
-        <div id="weather">
-            Loading...
+    <section class="weather-card">
+        <div class="current-weather">
+            <div id="currentTemp">--°</div>
+            <div id="currentCondition">Loading...</div>
         </div>
 
+        <div id="forecast" class="forecast"></div>
     </section>
 
-    <section class="grid">
+    <div class="cards">
 
         <div class="card">
-
             <h2>⚖️ Weight</h2>
-
-            <div class="big-number">
-                190.0
-            </div>
-
-            <p>Goal: 180 lbs</p>
-
+            <div class="value">190.2 lb</div>
+            <div>Goal: 180 lb</div>
         </div>
 
         <div class="card">
-
-            <h2>💳 Debt Freedom</h2>
-
-            <div class="big-number">
-                $22,470
-            </div>
-
-            <p>Remaining</p>
-
+            <h2>💳 Debt</h2>
+            <div class="value">$22,470</div>
+            <div>37% Paid Off</div>
         </div>
 
-        <div class="card">
+    </div>
 
-            <h2>🎯 Today's Goals</h2>
+    <div class="card">
+        <h2>💪 Weekly Workouts</h2>
+        <progress value="3" max="5"></progress>
+        <p>3 of 5 Completed</p>
+    </div>
 
-            <ul>
-                <li>✅ Workout</li>
-                <li>⬜ Read 20 min</li>
-                <li>✅ Drink Water</li>
-            </ul>
-
-        </div>
-
-        <div class="card">
-
-            <h2>🚀 Motivation</h2>
-
-            <p>
-                Small progress every day
-                leads to big results.
-            </p>
-
-        </div>
-
-    </section>
+    <div class="card">
+        <h2>📅 Today</h2>
+        <ul>
+            <li>Team Meeting - 9:00 AM</li>
+            <li>Baseball Practice - 6:00 PM</li>
+        </ul>
+    </div>
 
 </div>
 
