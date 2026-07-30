@@ -1,13 +1,14 @@
-// =========================
+// ===============================
 // Goal Dashboard v1.2
-// Live Clock + Greeting + Weather
-// =========================
+// Clock + Greeting + Open-Meteo Weather
+// ===============================
 
-const API_KEY = "13006147911794057541c2ffd369a87d";
-const CITY = "Carmel";
-const STATE = "Indiana";
+// Carmel, Indiana
+const LAT = 39.9784;
+const LON = -86.1180;
 
 function updateClock() {
+
     const now = new Date();
 
     document.getElementById("time").textContent =
@@ -35,31 +36,70 @@ function updateClock() {
     document.getElementById("greeting").textContent = greeting;
 }
 
+function weatherDescription(code) {
+
+    const map = {
+        0: "Clear",
+        1: "Mostly Clear",
+        2: "Partly Cloudy",
+        3: "Cloudy",
+        45: "Fog",
+        48: "Fog",
+        51: "Light Drizzle",
+        53: "Drizzle",
+        55: "Heavy Drizzle",
+        61: "Light Rain",
+        63: "Rain",
+        65: "Heavy Rain",
+        71: "Snow",
+        80: "Rain Showers",
+        95: "Thunderstorms"
+    };
+
+    return map[code] || "Weather";
+}
+
 async function loadWeather() {
 
     try {
 
         const url =
-        `https://api.openweathermap.org/data/2.5/weather?q=${CITY},US&units=imperial&appid=${API_KEY}`;
+            `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&timezone=auto`;
 
         const response = await fetch(url);
 
         const data = await response.json();
 
-        const weather =
-            `${Math.round(data.main.temp)}° • ${data.weather[0].main}
-High ${Math.round(data.main.temp_max)}°
-Low ${Math.round(data.main.temp_min)}°`;
+        const current = Math.round(data.current.temperature_2m);
 
-        document.getElementById("weather").textContent = weather;
+        const high = Math.round(data.daily.temperature_2m_max[0]);
+
+        const low = Math.round(data.daily.temperature_2m_min[0]);
+
+        const text = weatherDescription(data.current.weather_code);
+
+        document.getElementById("weather").innerHTML =
+            `
+            <div style="font-size:48px;font-weight:700;">
+                ${current}°
+            </div>
+
+            <div style="font-size:22px;">
+                ${text}
+            </div>
+
+            <div style="margin-top:10px;opacity:.75;">
+                High ${high}° • Low ${low}°
+            </div>
+            `;
 
     }
-    catch (err) {
+    catch (e) {
 
         document.getElementById("weather").textContent =
-            "Unable to load weather";
+            "Weather unavailable";
 
-        console.log(err);
+        console.log(e);
 
     }
 
@@ -69,6 +109,4 @@ updateClock();
 loadWeather();
 
 setInterval(updateClock,1000);
-
-// Refresh weather every 10 minutes
 setInterval(loadWeather,600000);
